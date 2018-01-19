@@ -19,6 +19,7 @@
   (interactive)
   (goto-char (text-property-any (point-min) (point-max) 'section-header t)))
 
+
 (defun section-next ()
   (interactive)
   (let ((current-section-end (next-single-property-change (point) 'section-end)))
