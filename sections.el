@@ -1,6 +1,10 @@
+(defface section-title
+  '((t :weight bold :inherit font-lock-keyword-face))
+  "Face for highlighting the current section's title."
+  :group 'section-faces)
 
 (defun section-insert-header (title)
-  (insert (propertize title 'section-header t 'face 'warning) "\n"))
+  (insert (propertize title 'section-header t 'face 'section-title) "\n"))
 
 
 (defun section-insert-body (body)
@@ -40,6 +44,9 @@
 (define-key section-mode-keymap (kbd "n") 'section-next)
 (define-key section-mode-keymap (kbd "p") 'section-prev)
 
+
 (define-derived-mode section-mode fundamental-mode "section-mode"
   (turn-on-auto-fill)
   (use-local-map section-mode-keymap))
+
+
