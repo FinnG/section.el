@@ -10,8 +10,11 @@
   :group 'section-faces)
 
 
-(defun section-insert-header (title)
-  (insert (propertize title 'section-header t 'face 'section-title) "\n"))
+(defun section-insert-header (title &optional extra)
+  (insert (propertize title 'section-header t 'face 'section-title))
+  (when extra
+    (insert " " extra))
+  (insert "\n"))
 
 
 (defun section-insert-body (body)
