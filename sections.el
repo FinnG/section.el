@@ -3,6 +3,13 @@
   "Face for highlighting the current section's title."
   :group 'section-faces)
 
+
+(defface section-highlight
+  '((t :inherit highlight))
+  "Face for highlighting the current section at point"
+  :group 'section-faces)
+
+
 (defun section-insert-header (title)
   (insert (propertize title 'section-header t 'face 'section-title) "\n"))
 
@@ -40,6 +47,15 @@
       (section-first))))
 
 
+(defun section-highlight-current ()
+  (when (equal major-mode 'section-mode)
+    (save-excursion
+      (let ((section-end (progn (section-next) (point)))
+            (section-start (progn (section-prev) (point))))
+        (move-overlay section-highlight-overlay section-start section-end)
+        (overlay-put section-highlight-overlay 'face 'section-highlight)))))
+
+
 (setq section-mode-keymap (make-sparse-keymap))
 (define-key section-mode-keymap (kbd "n") 'section-next)
 (define-key section-mode-keymap (kbd "p") 'section-prev)
@@ -47,6 +63,10 @@
 
 (define-derived-mode section-mode fundamental-mode "section-mode"
   (turn-on-auto-fill)
+  (setq-local section-highlight-overlay (make-overlay (point-min) (point-max)))
   (use-local-map section-mode-keymap))
+
+
+(add-hook 'post-command-hook 'section-highlight-current)
 
 
