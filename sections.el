@@ -52,8 +52,8 @@
     (save-excursion
       (let ((section-end (progn (section-next) (point)))
             (section-start (progn (section-prev) (point))))
-        (move-overlay section-highlight-overlay section-start section-end)
-        (overlay-put section-highlight-overlay 'face 'section-highlight)))))
+        (move-overlay section-mode-highlight-overlay section-start section-end)
+        (overlay-put section-mode-highlight-overlay 'face 'section-highlight)))))
 
 
 (setq section-mode-keymap (make-sparse-keymap))
@@ -63,7 +63,7 @@
 
 (define-derived-mode section-mode fundamental-mode "section-mode"
   (turn-on-auto-fill)
-  (setq-local section-highlight-overlay (make-overlay (point-min) (point-max)))
+  (setq-local section-mode-highlight-overlay (make-overlay (point-min) (point-max)))
   (use-local-map section-mode-keymap))
 
 
